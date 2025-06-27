@@ -8,6 +8,8 @@ import { Register } from './components/Auth/Register';
 import { Dashboard } from './components/Dashboard';
 import { POS } from './components/POS';
 import { Kitchen } from './components/Kitchen';
+import { Tables } from './components/Tables';
+import { Reservations } from './components/Reservations';
 import { Inventory } from './components/Inventory';
 import { Reports } from './components/Reports';
 import { Users } from './components/Users';
@@ -53,6 +55,28 @@ function App() {
             <ProtectedRoute allowedRoles={['admin', 'manager', 'kitchen']}>
               <Layout>
                 <Kitchen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tables"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'cashier']}>
+              <Layout>
+                <Tables />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'cashier']}>
+              <Layout>
+                <Reservations />
               </Layout>
             </ProtectedRoute>
           }

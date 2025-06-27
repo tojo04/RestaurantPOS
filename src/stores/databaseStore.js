@@ -10,7 +10,9 @@ class LocalDatabase {
       orders: 'pos_orders',
       reports: 'pos_reports',
       settings: 'pos_settings',
-      menuItems: 'pos_menu_items'
+      menuItems: 'pos_menu_items',
+      tables: 'pos_tables',
+      reservations: 'pos_reservations'
     };
     this.initializeDatabase();
   }
