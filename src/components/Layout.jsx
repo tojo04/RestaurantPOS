@@ -43,8 +43,9 @@ export const Layout = ({ children }) => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
-        <div className="p-6">
+      <div className="w-64 bg-white shadow-lg flex flex-col">
+        {/* Logo Section */}
+        <div className="p-6 border-b border-gray-200">
           <Link to="/dashboard" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
               <ChefHat className="w-5 h-5 text-white" />
@@ -53,44 +54,48 @@ export const Layout = ({ children }) => {
           </Link>
         </div>
 
-        <nav className="mt-6">
-          {allowedItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={clsx(
-                  'flex items-center px-6 py-3 text-sm font-medium transition-colors duration-200',
-                  isActive
-                    ? 'text-primary-600 bg-primary-50 border-r-2 border-primary-500'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                )}
-              >
-                <Icon className="w-5 h-5 mr-3" />
-                {item.label}
-              </Link>
-            );
-          })}
+        {/* Navigation Section */}
+        <nav className="flex-1 py-6">
+          <div className="space-y-1 px-3">
+            {allowedItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={clsx(
+                    'flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200',
+                    isActive
+                      ? 'text-primary-600 bg-primary-50 border-r-2 border-primary-500'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  )}
+                >
+                  <Icon className="w-5 h-5 mr-3" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
-        <div className="absolute bottom-0 w-64 p-6">
+        {/* User Profile Section */}
+        <div className="border-t border-gray-200 p-6">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
               <span className="text-sm font-medium text-primary-600">
                 {user?.name.charAt(0)}
               </span>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
               <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center w-full px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-200"
+            className="flex items-center w-full px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Logout
