@@ -216,12 +216,12 @@ export const Reservations = () => {
     }
   };
 
-  return (
+   return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <CalendarIcon className="w-8 h-8 text-primary-500" />
+          <CalendarIcon className="w-8 h-8 text-blue-600" />
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Reservations</h1>
             <p className="text-gray-600">Manage table reservations and bookings</p>
@@ -232,7 +232,7 @@ export const Reservations = () => {
             setFormData({ ...formData, date: format(selectedDate, 'yyyy-MM-dd') });
             setShowAddModal(true);
           }}
-          className="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors duration-200 flex items-center"
+          className="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center"
         >
           <Plus className="w-5 h-5 mr-2" />
           Add New Reservation
@@ -266,56 +266,49 @@ export const Reservations = () => {
 
       {/* Reservation Grid */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-        <div className="overflow-auto">
-          <div className="min-w-[1200px]">
+        <div className="overflow-x-auto">
+          <div className="reservation-grid">
             {/* Header Row */}
-            <div className="grid grid-cols-[100px_repeat(23,_1fr)] border-b border-gray-200">
-              <div className="p-4 bg-gray-50 font-medium text-gray-900 border-r border-gray-200">
-                Table
+            <div className="reservation-header">
+              <div className="table-header-cell">
+                <span className="text-sm font-semibold text-gray-900">Table</span>
               </div>
               {timeSlots.map((time) => (
-                <div key={time} className="p-2 bg-gray-50 text-center text-sm font-medium text-gray-900 border-r border-gray-200">
-                  {time}
+                <div key={time} className="time-header-cell">
+                  <span className="text-xs font-medium text-gray-700">{time}</span>
                 </div>
               ))}
             </div>
 
             {/* Table Rows */}
-            <div className="max-h-[600px] overflow-y-auto">
+            <div className="reservation-body">
               {tableIds.map((tableId) => (
-                <div key={tableId} className="grid grid-cols-[100px_repeat(23,_1fr)] border-b border-gray-200 hover:bg-gray-50">
-                  <div className="p-4 bg-gray-900 text-white font-medium border-r border-gray-200 flex items-center justify-center">
-                    {tableId}
+                <div key={tableId} className="table-row">
+                  <div className="table-name-cell">
+                    <span className="text-sm font-semibold text-white">{tableId}</span>
                   </div>
                   {timeSlots.map((time) => {
                     const reservation = getReservationForSlot(tableId, time);
                     const isReserved = isSlotReserved(tableId, time);
                     
                     return (
-                      <div 
-                        key={`${tableId}-${time}`} 
-                        className="p-2 border-r border-gray-200 min-h-[60px] flex items-center justify-center"
-                      >
+                      <div key={`${tableId}-${time}`} className="time-slot-cell">
                         {isReserved && reservation ? (
                           <div 
-                            className="w-full h-full bg-gray-300 rounded-lg p-2 cursor-pointer hover:bg-gray-400 transition-colors duration-200 flex items-center justify-center"
+                            className="reservation-block"
                             onClick={() => handleEdit(reservation)}
                             title={`${reservation.customerName} - ${reservation.partySize} people`}
                           >
-                            <div className="text-center">
-                              <div className="text-xs font-medium text-gray-800 truncate">
+                            <div className="reservation-info">
+                              <div className="customer-name">
                                 {reservation.customerName}
                               </div>
-                              <div className="text-xs text-gray-600">
+                              <div className="party-size">
                                 {reservation.partySize}p
                               </div>
                             </div>
                           </div>
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            {/* Empty slot */}
-                          </div>
-                        )}
+                        ) : null}
                       </div>
                     );
                   })}
@@ -342,7 +335,7 @@ export const Reservations = () => {
                   required
                   value={formData.customerName}
                   onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -353,7 +346,7 @@ export const Reservations = () => {
                     type="tel"
                     value={formData.customerPhone}
                     onChange={(e) => setFormData({ ...formData, customerPhone: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <div>
@@ -365,7 +358,7 @@ export const Reservations = () => {
                     max="12"
                     value={formData.partySize}
                     onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -376,7 +369,7 @@ export const Reservations = () => {
                   type="email"
                   value={formData.customerEmail}
                   onChange={(e) => setFormData({ ...formData, customerEmail: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -388,7 +381,7 @@ export const Reservations = () => {
                     required
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <div>
@@ -397,7 +390,7 @@ export const Reservations = () => {
                     required
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Time</option>
                     {timeSlots.map(time => (
@@ -414,7 +407,7 @@ export const Reservations = () => {
                     required
                     value={formData.tableId}
                     onChange={(e) => setFormData({ ...formData, tableId: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Table</option>
                     {tableIds.map(tableId => (
@@ -427,7 +420,7 @@ export const Reservations = () => {
                   <select
                     value={formData.duration}
                     onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value={60}>1 hour</option>
                     <option value={90}>1.5 hours</option>
@@ -444,7 +437,7 @@ export const Reservations = () => {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows="2"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -458,7 +451,7 @@ export const Reservations = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                 >
                   {editingReservation ? 'Update' : 'Create'} Reservation
                 </button>
@@ -467,6 +460,133 @@ export const Reservations = () => {
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        .reservation-grid {
+          display: table;
+          width: 100%;
+          min-width: 1400px;
+          border-collapse: separate;
+          border-spacing: 0;
+        }
+
+        .reservation-header {
+          display: table-row;
+          background-color: #f9fafb;
+        }
+
+        .table-header-cell {
+          display: table-cell;
+          width: 80px;
+          min-width: 80px;
+          max-width: 80px;
+          padding: 12px 8px;
+          text-align: center;
+          vertical-align: middle;
+          border-right: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+          background-color: #f9fafb;
+          position: sticky;
+          left: 0;
+          z-index: 10;
+        }
+
+        .time-header-cell {
+          display: table-cell;
+          width: 60px;
+          min-width: 60px;
+          max-width: 60px;
+          padding: 8px 4px;
+          text-align: center;
+          vertical-align: middle;
+          border-right: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+          background-color: #f9fafb;
+        }
+
+        .reservation-body {
+          display: table-row-group;
+        }
+
+        .table-row {
+          display: table-row;
+        }
+
+        .table-row:hover {
+          background-color: #f9fafb;
+        }
+
+        .table-name-cell {
+          display: table-cell;
+          width: 80px;
+          min-width: 80px;
+          max-width: 80px;
+          padding: 12px 8px;
+          text-align: center;
+          vertical-align: middle;
+          border-right: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+          background-color: #1f2937;
+          position: sticky;
+          left: 0;
+          z-index: 5;
+        }
+
+        .time-slot-cell {
+          display: table-cell;
+          width: 60px;
+          min-width: 60px;
+          max-width: 60px;
+          height: 60px;
+          padding: 4px;
+          text-align: center;
+          vertical-align: middle;
+          border-right: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+          position: relative;
+        }
+
+        .reservation-block {
+          width: 100%;
+          height: 52px;
+          background-color: #d1d5db;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+        }
+
+        .reservation-block:hover {
+          background-color: #9ca3af;
+          transform: scale(1.02);
+        }
+
+        .reservation-info {
+          text-align: center;
+          overflow: hidden;
+        }
+
+        .customer-name {
+          font-size: 10px;
+          font-weight: 600;
+          color: #374151;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 48px;
+        }
+
+        .party-size {
+          font-size: 9px;
+          color: #6b7280;
+          line-height: 1;
+          margin-top: 2px;
+        }
+      `}</style>
     </div>
   );
 };

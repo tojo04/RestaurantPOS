@@ -46,14 +46,12 @@ export const Inventory = () => {
  useEffect(() => {
   (async () => {
     const items = await db.getAll('inventory');
-    console.log('🛒 Fetched inventory in useEffect:', items);
+   
     
     if (items.length === 0) {
-      console.log('📂 No inventory found, initializing...');
+     
       await initializeSampleData();
-    } else {
-      console.log('📂 Inventory already present.');
-    }
+    } 
 
     await loadInventory();
   })();
@@ -122,7 +120,7 @@ export const Inventory = () => {
     setShowEditModal(true);
   };
 
-  // ✅ fixed with await
+  
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       await db.delete('inventory', id);
