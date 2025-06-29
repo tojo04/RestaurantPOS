@@ -32,7 +32,7 @@ export const Register = () => {
             </div>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">Create your account</h2>
-          <p className="mt-2 text-gray-600">Join RestaurantPOS today</p>
+          <p className="mt-2 text-gray-600">Join GrillBill today</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8">

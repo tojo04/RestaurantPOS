@@ -29,10 +29,10 @@ class LocalDatabase {
     if (!localStorage.getItem(this.collections.settings)) {
       const defaultSettings = {
         restaurant: {
-          name: 'RestaurantPOS',
+          name: 'GrillBill',
           address: 'ABCD',
           phone: '+91 9546215751',
-          email: 'info@restaurantpos.com',
+          email: 'info@grillbill.com',
           currency: 'IndianRupee',
           taxRate: 8.5,
           timezone: 'Delhi'

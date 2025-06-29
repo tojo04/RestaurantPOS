@@ -300,7 +300,7 @@ export const Landing = () => {
             Ready to Transform Your Restaurant?
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of restaurants already using RestaurantPOS to streamline 
+            Join thousands of restaurants already using GrillBill to streamline 
             their operations and increase profits.
           </p>
           <Link
